@@ -1,3 +1,4 @@
+import "dotenv/config"
 import express, { NextFunction, Request, Response } from "express";
 import morgan from "morgan";
 import cors from "cors";
@@ -5,21 +6,21 @@ import createHttpError, { isHttpError } from "http-errors";
 import authRouter from "./routes/authRoutes/auth"
 const app = express();
 
-// const allowedOrigins=["http://localhost:5173"]
+const allowedOrigins=["http://localhost:5173"]
 
-// const corsOptions: cors.CorsOptions={
-//     origin:(origin,callback)=>{
-//         if(!origin || allowedOrigins.includes(origin)){
-//             callback(null,true)
-//         }else{
-//             callback(new Error("Origine non autorisé par Cors"))
-//         }
-//     },
-//     credentials:true,
-//     optionsSuccessStatus:200
+const corsOptions: cors.CorsOptions={
+    origin:(origin,callback)=>{
+        if(!origin || allowedOrigins.includes(origin)){
+            callback(null,true)
+        }else{
+            callback(new Error("Origine non autorisé par Cors"))
+        }
+    },
+    credentials:true,
+    optionsSuccessStatus:200
 
-// }
-// app.use(cors(corsOptions))
+}
+app.use(cors(corsOptions))
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
